@@ -9,6 +9,7 @@ type Query {
 type Mutation {
     createBaby( data: BabyCreateInput! ): Baby!
     updateBaby( id: ID!, data: BabyUpdateInput! ): Baby!
+    # TODO: add parent to baby's liked_by array
     deleteBaby( id: ID! ): Baby!
 
     createParent( data: ParentCreateInput! ): Parent!
