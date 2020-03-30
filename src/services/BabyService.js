@@ -1,14 +1,36 @@
 const Babies = require('../models/Babies');
 
-const createOneBaby = () => {};
+const createOneBaby = ( data ) => Babies.create(data);
 
-const readAllBabies = () => {};
+const readAllBabies = () => Babies
+    .find( { is_active: true } )
+    .populate({
+        path: 'parents',
+        model: 'parents'
+    });
 
-const readOneBaby = () => {};
+const readOneBaby = ( id ) => Babies
+    .findById({
+        _id: id,
+        is_active: true
+    })
+    .populate({
+        path: 'parents',
+        model: 'parents'
+    });
 
-const updateOneBaby = () => {};
+const updateOneBaby = ( id, data ) => Babies
+    .findByIdAndUpdate(
+        { _id: id, is_active: true},
+        { ...data },
+        {new: true}
+    );
 
-const deleteOneBaby = () => {};
+const deleteOneBaby = ( id ) => Babies
+    .findByIdAndDelete(
+        { _id: id, is_active: true },
+        { is_active: false }
+    );
 
 module.exports = {
     createOneBaby,
