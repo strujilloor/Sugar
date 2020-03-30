@@ -27,7 +27,7 @@ const updateOneBaby = ( id, data ) => Babies
     );
 
 const deleteOneBaby = ( id ) => Babies
-    .findByIdAndDelete(
+    .findByIdAndUpdate(
         { _id: id, is_active: true },
         { is_active: false }
     );
