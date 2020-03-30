@@ -1,0 +1,25 @@
+{
+  "name": "sugar",
+  "version": "1.0.0",
+  "description": "App Sugar Baby",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/strujilloor/Sugar.git"
+  },
+  "keywords": [
+    "sugar",
+    "app",
+    "sugar",
+    "baby"
+  ],
+  "author": "stiven",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/strujilloor/Sugar/issues"
+  },
+  "homepage": "https://github.com/strujilloor/Sugar#readme"
+}
