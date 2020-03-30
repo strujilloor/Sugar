@@ -1,0 +1,21 @@
+type Query {}
+
+type Mutation {}
+
+type Baby {}
+
+type Parent {}
+
+input BabyCreateInput {}
+
+input ParentCreateInput {}
+
+input BabyUpdateInput {}
+
+input ParentUpdateInput {}
+
+enum GENDERS{
+    M
+    F
+    O
+}
