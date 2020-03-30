@@ -11,7 +11,7 @@ const ParentSchema = new Schema({
     profile_pic: String,
     // score: {type: Number, enum: [1, 2, 3, 4, 5]},
     gender: {type: String, enum: ['M', 'F', 'O']},
-    // liked_by: {type: [Schema.Types.ObjectId], ref: 'posts'},
+    // liked_by: {type: [Schema.Types.ObjectId], ref: 'parents'},
     is_active: {type: Boolean, default: true},
 }, { timestamps: true });
 
