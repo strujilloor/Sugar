@@ -8,7 +8,7 @@ const getParents = async () => {
 const getParentById = async (_, { id }) => {
     const parent = await readOneParent( id );
     return parent; 
-}
+};
 
 module.exports = {
     getParents,

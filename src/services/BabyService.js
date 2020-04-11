@@ -5,17 +5,14 @@ const createOneBaby = ( data ) => Babies.create(data);
 const readAllBabies = () => Babies
     .find( { is_active: true } )
     .populate({
-        path: 'parents',
+        path: 'liked_by',
         model: 'parents'
     });
 
 const readOneBaby = ( id ) => Babies
-    .findById({
-        _id: id,
-        is_active: true
-    })
+    .findOne({_id: id, is_active: true})
     .populate({
-        path: 'parents',
+        path: 'liked_by',
         model: 'parents'
     });
 

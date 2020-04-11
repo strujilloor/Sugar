@@ -2,11 +2,19 @@ const Parents = require('../models/Parents');
 
 const createOneParent = ( data ) => Parents.create( data );
 
-const readAllParents = () => Parents.find( { is_active: true } );
+const readAllParents = () => Parents
+    .find( { is_active: true } )
+    .populate({
+        path: 'liked_by',
+        model: 'babies'
+    });
 
-const readOneParent = ( id ) => Parents.findById(
-    { _id: id, is_active: true } 
-);
+const readOneParent = ( id ) => Parents
+    .findOne( { _id: id, is_active: true } )
+    .populate({
+        path: 'liked_by',
+        model: 'babies'
+    });
 
 const updateOneParent = ( id, data ) => Parents
     .findByIdAndUpdate(
