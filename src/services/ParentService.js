@@ -29,10 +29,21 @@ const deleteOneParent = ( id ) => Parents
         { is_active: false }
     );
 
+const readOneParentByEmail = ( email ) => Parents
+    .findOne({ 
+        email, 
+        is_active: true
+    })
+    .populate({
+        path: 'liked_by',
+        model: 'babies'
+    });
+
 module.exports = {
     createOneParent,
     readAllParents,
     readOneParent,
     updateOneParent,
-    deleteOneParent
+    deleteOneParent,
+    readOneParentByEmail
 };
