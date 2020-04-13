@@ -1,3 +1,6 @@
+scalar EmailAdd
+directive @auth on FIELD_DEFINITION | FIELD
+
 type Query {
     getBabies: [Baby]!
     getBabyById( id: ID! ): Baby!
@@ -12,22 +15,30 @@ type Query {
 
 type Mutation {
     createBaby( data: BabyCreateInput! ): Baby!
-    updateBaby( id: ID!, data: BabyUpdateInput! ): Baby!
+    updateBaby( id: ID!, data: BabyUpdateInput! ): Baby! @auth
     # TODO: add parent to baby's liked_by array
-    addParent( idBaby: ID!, idParent: ID! ): String!
-    deleteBaby( id: ID! ): String!
+    addParent( idBaby: ID!, idParent: ID! ): String! @auth
+    deleteBaby( id: ID! ): String! @auth
 
     createParent( data: ParentCreateInput! ): Parent!
-    updateParent( id: ID!, data: ParentUpdateInput! ): Parent!
-    addBaby( idParent: ID!, idBaby: ID! ): String!
-    deleteParent( id: ID! ): String!
+    updateParent( id: ID!, data: ParentUpdateInput! ): Parent! @auth
+    addBaby( idParent: ID!, idBaby: ID! ): String! @auth
+    deleteParent( id: ID! ): String! @auth
+
+
+    login(email:EmailAdd!, password: String!): Auth!
+}
+
+type Auth {
+    token: String!
+    message: String!
 }
 
 type Baby {
     _id: ID!
     first_name: String!
     last_name: String!
-    email: String!
+    email: EmailAdd!
     password: String!
     cellphone: String!
     birth_date: String
@@ -43,7 +54,7 @@ type Parent {
     _id: ID!
     first_name: String!
     last_name: String!
-    email: String!
+    email: EmailAdd!
     password: String!
     cellphone: String!
     birth_date: String
