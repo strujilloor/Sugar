@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt'); // BIBLIOTECA PARA ENCRIPTAR
 
 const Schema = mongoose.Schema;
 
@@ -16,5 +17,23 @@ const ParentSchema = new Schema({
     is_active: {type: Boolean, default: true},
     description: String,
 }, { timestamps: true });
+
+ParentSchema.pre('save', function(next) {
+    const parent = this;
+    const SALT_FACTOR = 13;
+
+    if (!parent.isModified('password')) { return next(); }
+
+    bcrypt.genSalt(SALT_FACTOR, function(err, salt) {
+        if(err) return next(err);
+
+        bcrypt.hash(parent.password, salt, function(error, hash) {
+            if(error) return next(error);
+            parent.password = hash;
+            next();
+        });
+    });
+
+});
 
 module.exports = mongoose.model('parents', ParentSchema);
