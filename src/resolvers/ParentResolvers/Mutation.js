@@ -1,4 +1,5 @@
 const { createOneParent, updateOneParent, deleteOneParent, readOneParent } = require('../../services/ParentService');
+const authenticate = require('../../utils/authenticate'); // importamos el método
 // const { readOneParent } = require('../../services/ParentService');
 
 const createParent = async (_, { data }) => {
@@ -6,19 +7,19 @@ const createParent = async (_, { data }) => {
     return parent;
 };
 
-const updateParent = async (_, { id, data }) => {
-    const parent = await updateOneParent( id, data );
+const updateParent = async (_, { data }, { userAuth }) => {
+    const parent = await updateOneParent( userAuth._id, data );
     return parent;
 };
 
-const deleteParent = async (_, { id }) => {
-    const parent = await deleteOneParent( id );
+const deleteParent = async (_, __, { userAuth }) => {
+    const parent = await deleteOneParent( userAuth._id );
     if ( !parent ) return 'Parent not exits';
     return 'Parent deleted';
 };
 
-const addBaby = async (_, { idParent, idBaby }) => {
-    const parent = await readOneParent( idParent );
+const addBaby = async (_, { idBaby }, { userAuth }) => {
+    const parent = await readOneParent( userAuth.id );
     if ( parent ) {
         parent.liked_by.push( idBaby );
         parent.save();
@@ -29,9 +30,21 @@ const addBaby = async (_, { idParent, idBaby }) => {
     return 'Like to Baby';
 };
 
+// login
+const loginParent = async (_, params ) => {
+    const token = authenticate(params)
+        .catch( e => { throw e; });
+    
+    return {
+        token: token,
+        message: 'Login Parent Success'
+    };
+};
+
 module.exports = {
     createParent,
     updateParent,
     deleteParent,
     addBaby,
+    loginParent,
 }; 

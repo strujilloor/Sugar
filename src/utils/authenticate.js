@@ -6,22 +6,24 @@ const createToken = require('./createToken'); // generar el token para devolvers
 const authenticate = ( {email, password} ) => {
     return new Promise((resolve, reject)=>{
         readOneBabyByEmail(email)
-            .then(userAuth => {
-                if( !userAuth ) {
-                    readOneParentByEmail(email).then(userAuth => {
-                        if( !userAuth ) reject( new Error('User not exist') );
-                        bcrypt.compare(password, userAuth.password, (err, isValid) => { // compara el password con el valor almacenado encriptado
+            .then(babyAuth => {
+                babyAuth['role'] = 'baby';
+                if( !babyAuth ) {
+                    readOneParentByEmail(email).then(parentAuth => {
+                        parentAuth['role'] = 'parent';
+                        if( !parentAuth ) reject( new Error('User not exist') );
+                        bcrypt.compare(password, parentAuth.password, (err, isValid) => { // compara el password con el valor almacenado encriptado
                             if(err) reject(new Error('Error comparing'));
                             isValid // es valida la contraseña ?
-                                ? resolve(createToken(userAuth)) // creame el token con el usuario a authenticar
+                                ? resolve(createToken(parentAuth)) // creame el token con el usuario a authenticar
                                 : reject(new Error('Incorrect Password'));
                         });
                     });
                 }
-                bcrypt.compare(password, userAuth.password, (err, isValid) => { // compara el password con el valor almacenado encriptado
+                bcrypt.compare(password, babyAuth.password, (err, isValid) => { // compara el password con el valor almacenado encriptado
                     if(err) reject(new Error('Error comparing'));
                     isValid // es valida la contraseña ?
-                        ? resolve(createToken(userAuth)) // creame el token con el usuario a authenticar
+                        ? resolve(createToken(babyAuth)) // creame el token con el usuario a authenticar
                         : reject(new Error('Incorrect Password'));
                 });
             });

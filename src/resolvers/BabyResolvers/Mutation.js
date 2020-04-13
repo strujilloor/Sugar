@@ -1,4 +1,5 @@
 const { createOneBaby, updateOneBaby, deleteOneBaby, readOneBaby } = require('../../services/BabyService');
+const authenticate = require('../../utils/authenticate'); // importamos el método
 // const { readOneParent } = require('../../services/ParentService');
 
 const createBaby = async (_, { data }) => {
@@ -6,13 +7,13 @@ const createBaby = async (_, { data }) => {
     return baby;
 };
 
-const updateBaby = async (_, { id, data }) => {
-    const baby = await updateOneBaby( id, data );
+const updateBaby = async (_, { data }, { userAuth }) => {
+    const baby = await updateOneBaby( userAuth._id, data );
     return baby;
 };
 
-const addParent = async (_, { idBaby, idParent }) => {
-    const baby = await readOneBaby( idBaby );
+const addParent = async (_, { idParent }, { userAuth }) => {
+    const baby = await readOneBaby( userAuth._id );
     if ( baby ) {
         baby.liked_by.push( idParent );
         baby.save();
@@ -23,15 +24,27 @@ const addParent = async (_, { idBaby, idParent }) => {
     return 'Like to Parent';
 }
 
-const deleteBaby = async (_, { id }) => {
-    const baby = await deleteOneBaby( id );
+const deleteBaby = async (_, __, { userAuth }) => { // por que se usa dos __?
+    const baby = await deleteOneBaby( userAuth._id );
     if ( !baby ) return 'Baby not exits';
     return 'Baby deleted';
+};
+
+// login
+const loginBaby = async (_, params ) => {
+    const token = authenticate(params)
+        .catch( e => { throw e; });
+    
+    return {
+        token: token,
+        message: 'Login Baby Success'
+    };
 };
 
 module.exports = {
     createBaby,
     updateBaby,
     deleteBaby,
-    addParent
+    addParent,
+    loginBaby
 }; 

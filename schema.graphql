@@ -4,29 +4,30 @@ directive @auth on FIELD_DEFINITION | FIELD
 type Query {
     getBabies: [Baby]!
     getBabyById( id: ID! ): Baby!
-    getBabyByEmail(id: ID!): Baby!
+    # getBabyByEmail(email: String!): Baby!
 
     getParents: [Parent]!
     getParentById( id: ID! ): Parent!
-    getParentByEmail(id: ID!): Parent!
+    # getParentByEmail(email: String!: Parent!
 
-    # me: Author! @auth ¿como lo hago si puede retornar un Baby como un Parent? R/ has uno para cada uno
+    # meBaby: Author! @auth ¿como lo hago si puede retornar un Baby como un Parent? R/ has uno para cada uno
 }
 
 type Mutation {
     createBaby( data: BabyCreateInput! ): Baby!
-    updateBaby( id: ID!, data: BabyUpdateInput! ): Baby! @auth
+    updateBaby( data: BabyUpdateInput! ): Baby! @auth
     # TODO: add parent to baby's liked_by array
-    addParent( idBaby: ID!, idParent: ID! ): String! @auth
-    deleteBaby( id: ID! ): String! @auth
+    addParent( idParent: ID! ): String! @auth
+    deleteBaby: String! @auth
 
     createParent( data: ParentCreateInput! ): Parent!
-    updateParent( id: ID!, data: ParentUpdateInput! ): Parent! @auth
-    addBaby( idParent: ID!, idBaby: ID! ): String! @auth
-    deleteParent( id: ID! ): String! @auth
+    updateParent( data: ParentUpdateInput! ): Parent! @auth
+    addBaby( idBaby: ID! ): String! @auth
+    deleteParent: String! @auth
 
 
-    login(email:EmailAdd!, password: String!): Auth!
+    loginBaby(email:EmailAdd!, password: String!): Auth!
+    loginParent(email:EmailAdd!, password: String!): Auth!
 }
 
 type Auth {
@@ -74,7 +75,7 @@ input BabyCreateInput {
     cellphone: String!
     birth_date: String
     profile_pic: String
-    score: SCORES
+    score: Number
     gender: GENDERS
     is_active: Boolean
 }
