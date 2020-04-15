@@ -44,8 +44,8 @@ type Baby {
     password: String!
     cellphone: String!
     birth_date: String
-    profile_pic: Upload
-    score: Number
+    profile_pic: String # no tiene que ser obligatoriamente un string
+    score: Int
     gender: GENDERS
     liked_by: [Parent]!
     is_active: Boolean!
@@ -60,8 +60,8 @@ type Parent {
     password: String!
     cellphone: String!
     birth_date: String
-    profile_pic: Upload
-    score: Number
+    profile_pic: String
+    score: Int
     gender: GENDERS
     liked_by: [Baby]!
     is_active: Boolean!
@@ -76,7 +76,7 @@ input BabyCreateInput {
     cellphone: String!
     birth_date: String
     profile_pic: Upload
-    score: Number
+    score: Int
     gender: GENDERS
     is_active: Boolean
 }
@@ -89,7 +89,7 @@ input ParentCreateInput {
     cellphone: String!
     birth_date: String
     profile_pic: Upload
-    score: Number
+    score: Int
     gender: GENDERS
     is_active: Boolean
 }
@@ -102,7 +102,7 @@ input BabyUpdateInput {
     cellphone: String
     birth_date: String
     profile_pic: Upload
-    score: Number
+    score: Int
     gender: GENDERS
     is_active: Boolean
 }
@@ -115,7 +115,7 @@ input ParentUpdateInput {
     cellphone: String
     birth_date: String
     profile_pic: Upload
-    score: Number
+    score: Int
     gender: GENDERS
     is_active: Boolean
 }

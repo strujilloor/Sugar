@@ -5,14 +5,14 @@ const storage = require('../../utils/storage');
 
 const createBaby = async (_, { data }) => {
     // data: un multipart form data 
-    if( data.cover ) { // cover es donde viene el archivo (file)
-        console.log(data.cover, typeof data.cover);
-        const { createReadStream } = await data.cover; // espera a cargar el archivo
+    if( data.profile_pic  ) { // profile_pic es donde viene el archivo (file)
+        console.log(data.profile_pic , typeof data.profile_pic );
+        const { createReadStream } = await data.profile_pic ; // espera a cargar el archivo
         const stream = createReadStream(); // createReadStream nos permite leer el flujo de datos
         const storageInfo = await storage({stream}); // almacenamos lo que nos trae el storage
         data = {
             ...data,
-            cover: storageInfo.url, //url image
+            profile_pic: storageInfo.url, //url image
         }
     }
 
@@ -21,14 +21,14 @@ const createBaby = async (_, { data }) => {
 };
 
 const updateBaby = async (_, { data }, { userAuth }) => {
-    if ( data.cover ) {
-        const { createReadStream } = await data.cover;
+    if ( data.profile_pic  ) {
+        const { createReadStream } = await data.profile_pic;
         const stream = createReadStream();
         const storageInfo = await storage({stream});
         // console.log(storageInfo);
         data = {
             ...data,
-            cover: storageInfo.secure_url, //url image
+            profile_pic: storageInfo.secure_url, //url image
         };
     }
     const baby = await updateOneBaby( userAuth._id, data );

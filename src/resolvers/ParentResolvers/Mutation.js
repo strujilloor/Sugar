@@ -3,11 +3,31 @@ const authenticate = require('../../utils/authenticate'); // importamos el méto
 // const { readOneParent } = require('../../services/ParentService');
 
 const createParent = async (_, { data }) => {
+    if ( data.profile_pic  ) {
+        const { createReadStream } = await data.profile_pic;
+        const stream = createReadStream();
+        const storageInfo = await storage({stream});
+        // console.log(storageInfo);
+        data = {
+            ...data,
+            profile_pic: storageInfo.secure_url, //url image
+        };
+    }
     const parent = await createOneParent( data );
     return parent;
 };
 
 const updateParent = async (_, { data }, { userAuth }) => {
+    if ( data.profile_pic  ) {
+        const { createReadStream } = await data.profile_pic;
+        const stream = createReadStream();
+        const storageInfo = await storage({stream});
+        // console.log(storageInfo);
+        data = {
+            ...data,
+            profile_pic: storageInfo.secure_url, //url image
+        };
+    }
     const parent = await updateOneParent( userAuth._id, data );
     return parent;
 };
