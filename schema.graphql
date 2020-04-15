@@ -1,4 +1,5 @@
 scalar EmailAdd
+scalar Upload
 directive @auth on FIELD_DEFINITION | FIELD
 
 type Query {
@@ -43,8 +44,8 @@ type Baby {
     password: String!
     cellphone: String!
     birth_date: String
-    profile_pic: String
-    score: SCORES
+    profile_pic: Upload
+    score: Number
     gender: GENDERS
     liked_by: [Parent]!
     is_active: Boolean!
@@ -59,8 +60,8 @@ type Parent {
     password: String!
     cellphone: String!
     birth_date: String
-    profile_pic: String
-    score: SCORES
+    profile_pic: Upload
+    score: Number
     gender: GENDERS
     liked_by: [Baby]!
     is_active: Boolean!
@@ -74,7 +75,7 @@ input BabyCreateInput {
     password: String!
     cellphone: String!
     birth_date: String
-    profile_pic: String
+    profile_pic: Upload
     score: Number
     gender: GENDERS
     is_active: Boolean
@@ -87,7 +88,8 @@ input ParentCreateInput {
     password: String!
     cellphone: String!
     birth_date: String
-    profile_pic: String
+    profile_pic: Upload
+    score: Number
     gender: GENDERS
     is_active: Boolean
 }
@@ -99,8 +101,8 @@ input BabyUpdateInput {
     password: String
     cellphone: String
     birth_date: String
-    profile_pic: String
-    score: SCORES
+    profile_pic: Upload
+    score: Number
     gender: GENDERS
     is_active: Boolean
 }
@@ -112,7 +114,8 @@ input ParentUpdateInput {
     password: String
     cellphone: String
     birth_date: String
-    profile_pic: String
+    profile_pic: Upload
+    score: Number
     gender: GENDERS
     is_active: Boolean
 }
