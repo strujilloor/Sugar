@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "App Sugar Baby",
   "main": "index.js",
+  "engines": {
+    "node": "10.x"
+  },
   "scripts": {
     "dev": "nodemon index.js",
+    "start": "set NODE_ENV=production && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -12,7 +16,7 @@
     "url": "git+https://github.com/strujilloor/Sugar.git"
   },
   "keywords": [
-    "sugar",
+    "sugar",  
     "app",
     "sugar",
     "baby"
